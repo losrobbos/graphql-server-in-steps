@@ -54,15 +54,29 @@ const UserType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: "RootQuery",
   fields: {
+    user: {
+      type: UserType,
+      args: { id: { type: GraphQLID }},
+      resolve: (_, args) => {
+        return users.find(user => user._id == args.id)
+      }
+    },
     users: {
       type: new GraphQLList(UserType),
-      resolve: (parent, args) => {
+      resolve: () => {
         return users
+      }
+    },
+    todo: {
+      type: TodoType,
+      args: { id: { type: GraphQLID }},
+      resolve: (_, args) => {
+        return todos.find(todo => todo._id == args.id)
       }
     },
     todos: {
       type: new GraphQLList(TodoType),
-      resolve: (parent, args) => {
+      resolve: () => {
         return todos
       }
     }
