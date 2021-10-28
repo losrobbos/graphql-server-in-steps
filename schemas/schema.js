@@ -1,4 +1,4 @@
-import graphql from 'graphql'
+import graphql, { GraphQLInputObjectType } from 'graphql'
 
 const { 
   GraphQLSchema, 
@@ -7,7 +7,7 @@ const {
   GraphQLID, 
   GraphQLInt, 
   GraphQLBoolean, 
-  GraphQLString 
+  GraphQLString
 } = graphql
 
 const users = [ 
@@ -51,6 +51,22 @@ const UserType = new GraphQLObjectType({
   })
 })
 
+const UserInput = new GraphQLInputObjectType({
+  name: "UserInput",
+  fields: {
+    name: { type: GraphQLString }
+  }
+})
+
+const TodoInput = new GraphQLInputObjectType({
+  name: "TodoInput",
+  fields: {
+    text: { type: GraphQLString },
+    status: { type: GraphQLBoolean },
+    userId: { type: GraphQLID }
+  }
+})
+
 const RootQuery = new GraphQLObjectType({
   name: "RootQuery",
   fields: {
@@ -84,9 +100,34 @@ const RootQuery = new GraphQLObjectType({
   }
 })
 
+const RootMutation = new GraphQLObjectType({
+  name: "RootMutation",
+  fields: () => ({
+    userAdd: {
+      type: UserType,
+      args: { input: { type: UserInput }},
+      resolve: (_, args) => {
+        const userNew = { ...args.input, _id: Date.now().toString() }
+        users.push( userNew )
+        return userNew
+      }
+    },
+    todoAdd: {
+      type: TodoType,
+      args: { input: { type: TodoInput }},
+      resolve: (_, args) => {
+        const todoNew = { ...args.input, _id: Date.now().toString() }
+        todos.push( todoNew )
+        return todoNew
+      }
+    }
+  })
+})
+
 // create schema with RootQuery & RootMutations
 const schema = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation: RootMutation
 })
 
 export default schema
