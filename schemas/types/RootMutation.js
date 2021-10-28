@@ -40,9 +40,6 @@ const RootMutation = new GraphQLObjectType({
       args: { input: { type: UserInput }},
       resolve: (_, args) => {
         return User.create( args.input )
-        // const userNew = { ...args.input, _id: Date.now().toString() }
-        // users.push( userNew )
-        // return userNew
       }
     },
     todoAdd: {
@@ -50,9 +47,6 @@ const RootMutation = new GraphQLObjectType({
       args: { input: { type: TodoInput }},
       resolve: (_, args) => {
         return Todo.create( args.input )
-        // const todoNew = { ...args.input, _id: Date.now().toString() }
-        // todos.push( todoNew )
-        // return todoNew
       }
     }
   })

@@ -12,7 +12,6 @@ const UserType = new GraphQLObjectType({
       type: new GraphQLList( TodoType ),
       resolve: (user) => {
         return Todo.find({ userId: user._id })
-        // return todos.filter(todo => todo.userId == user._id )
       }
     }
   })

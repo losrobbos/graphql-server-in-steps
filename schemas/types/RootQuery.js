@@ -45,7 +45,6 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID }},
       resolve: (_, args) => {
         return User.findById( args.id )
-        // return users.find(user => user._id == args.id)
       }
     },
     todo: {
@@ -53,7 +52,6 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID }},
       resolve: (_, args) => {
         return Todo.findById( args.id )
-        // return todos.find(todo => todo._id == args.id)
       }
     },
     users: {
@@ -64,16 +62,13 @@ const RootQuery = new GraphQLObjectType({
           throw new Error("Not allowed to view users without token, buddy")
         }
         return User.find()
-        // return users
       }
     },
     todos: {
       type: new GraphQLList(TodoType),
       resolve: async (_, args, { isAuth }) => {
         console.log( isAuth )
-        const todos = await Todo.find()
-        console.log( todos )
-        return todos
+        return Todo.find()
       }
     }
 
