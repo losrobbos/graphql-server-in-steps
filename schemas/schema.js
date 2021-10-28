@@ -11,18 +11,6 @@ const {
   GraphQLString
 } = graphql
 
-const users = [ 
-  { _id: "u1", name: "Losrobbos", email: "los@los.los", pw: "los" },
-  { _id: "u2", name: "Wazzabizz", email: "waz@waz.waz", pw: "waz" }
-]
-
-const todos = [
-  { _id: "t1", text: "Code GraphQL intro", status: false, userId: "u1" },
-  { _id: "t2", text: "Deploy GraphQL to Vercellll", status: false, userId: "u1" },
-  { _id: "t3", text: "Code Mini Todo Frontend", status: false, userId: "u1" },
-  { _id: "t4", text: "Leaving for good", status: true, userId: "u2" },
-]
-
 const TodoType = new GraphQLObjectType({
   name: "Todo",
   fields: () => ({
