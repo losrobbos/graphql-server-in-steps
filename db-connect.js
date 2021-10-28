@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const MONGO_URI = "mongodb://localhost/todos_graphql_db?retryWrites=true&w=majority"
+const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost/todos_graphql_db?retryWrites=true&w=majority"
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true, 

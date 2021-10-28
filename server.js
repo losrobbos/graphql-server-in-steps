@@ -3,6 +3,7 @@ import { graphqlHTTP } from "express-graphql";
 import schema from './schemas/schema.js'
 import auth from './auth/authenticate.js'
 import './env-setup.js'
+import './db-connect.js'
 
 const app = express()
 
