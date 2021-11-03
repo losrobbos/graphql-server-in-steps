@@ -3,7 +3,8 @@ import {
   GraphQLInputObjectType, 
   GraphQLString, 
   GraphQLBoolean,
-  GraphQLID
+  GraphQLID,
+  GraphQLNonNull
 } from 'graphql'
 
 import UserType from './UserType.js'
@@ -16,18 +17,18 @@ import Todo from '../../models/Todo.js'
 const UserInput = new GraphQLInputObjectType({
   name: "UserInput",
   fields: {
-    name: { type: GraphQLString },
-    email: { type: GraphQLString },
-    pw: { type: GraphQLString }
+    name: { type: new GraphQLNonNull( GraphQLString ) },
+    email: { type: new GraphQLNonNull( GraphQLString ) },
+    pw: { type: new GraphQLNonNull( GraphQLString ) }
   }
 })
 
 const TodoInput = new GraphQLInputObjectType({
   name: "TodoInput",
   fields: {
-    text: { type: GraphQLString },
+    text: { type: new GraphQLNonNull( GraphQLString ) },
+    userId: { type: new GraphQLNonNull( GraphQLID ) },
     status: { type: GraphQLBoolean },
-    userId: { type: GraphQLID }
   }
 })
 
@@ -39,6 +40,7 @@ const RootMutation = new GraphQLObjectType({
       type: UserType,
       args: { input: { type: UserInput }},
       resolve: (_, args) => {
+        console.log( args.input )
         return User.create( args.input )
       }
     },
@@ -46,6 +48,7 @@ const RootMutation = new GraphQLObjectType({
       type: TodoType,
       args: { input: { type: TodoInput }},
       resolve: (_, args) => {
+        console.log( args.input )
         return Todo.create( args.input )
       }
     }
